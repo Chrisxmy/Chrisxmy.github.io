@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-01-09T06:52:32.095Z</updated>
+  <updated>2018-01-09T08:25:01.101Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>浏览器缓存</title>
+    <link href="http://yoursite.com/2018/01/09/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98/"/>
+    <id>http://yoursite.com/2018/01/09/浏览器缓存/</id>
+    <published>2018-01-09T08:11:56.699Z</published>
+    <updated>2018-01-09T08:25:01.101Z</updated>
+    
+    <content type="html"><![CDATA[<h5 id="浏览器缓存分为强缓存和协商缓存："><a href="#浏览器缓存分为强缓存和协商缓存：" class="headerlink" title="浏览器缓存分为强缓存和协商缓存："></a>浏览器缓存分为强缓存和协商缓存：</h5><p>1）浏览器在加载资源时，先根据这个资源的一些http header判断它是否命中强缓存，强缓存如果命中，浏览器直接从自己的缓存中读取资源，不会发请求到服务器。比如某个css文件，如果浏览器在加载它所在的网页时，这个css文件的缓存配置命中了强缓存，浏览器就直接从缓存中加载这个css，连请求都不会发送到网页所在服务器；</p><p>2）当强缓存没有命中的时候，浏览器一定会发送一个请求到服务器，通过服务器端依据资源的另外一些http header验证这个资源是否命中协商缓存，如果协商缓存命中，服务器会将这个请求返回，但是不会返回这个资源的数据，而是告诉客户端可以直接从缓存中加载这个资源，于是浏览器就又会从自己的缓存中去加载这个资源；</p><p>3）强缓存与协商缓存的共同点是：如果命中，都是从客户端缓存中加载资源，而不是从服务器加载资源数据；区别是：强缓存不发请求到服务器，协商缓存会发请求到服务器。</p><p>4）当协商缓存也没有命中的时候，浏览器直接从服务器加载资源数据。</p><h6 id="强缓存原理"><a href="#强缓存原理" class="headerlink" title="强缓存原理"></a>强缓存原理</h6><p>强缓存是利用Expires或者Cache-Control这两个http response header实现的，它们都用来表示资源在客户端缓存的有效期。</p><p>Expires是http1.0提出的一个表示资源过期时间的header，它描述的是一个绝对时间，由服务器返回，用GMT格式的字符串表示，如：Expires:Thu, 31 Dec 2037 23:55:55 GMT，它的缓存原理是：</p><p>1）浏览器第一次跟服务器请求一个资源，服务器在返回这个资源的同时，在respone的header加上Expires的header，如：</p><p><img src="http://upload-images.jianshu.io/upload_images/3984027-41c80c397f90cb54.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="捕获.PNG"></p><p>2）浏览器在接收到这个资源后，会把这个资源连同所有response header一起缓存下来（所以缓存命中的请求返回的header并不是来自服务器，而是来自之前缓存的header）；</p><p>3）浏览器再请求这个资源时，先从缓存中寻找，找到这个资源后，拿出它的Expires跟当前的请求时间比较，如果请求时间在Expires指定的时间之前，就能命中缓存，否则就不行。</p><p>4）如果缓存没有命中，浏览器直接从服务器加载资源时，Expires Header在重新加载的时候会被更新。<br>Expires是较老的强缓存管理header，由于它是服务器返回的一个绝对时间，在服务器时间与客户端时间相差较大时，缓存管理容易出现问题，比如随意修改下客户端时间，就能影响缓存命中的结果。所以在http1.1的时候，提出了一个新的header，就是Cache-Control，这是一个相对时间，在配置缓存的时候，以秒为单位，用数值表示，如：Cache-Control:max-age=315360000，它的缓存原理是：<br>1）浏览器第一次跟服务器请求一个资源，服务器在返回这个资源的同时，在respone的header加上Cache-Control的header，如：</p><p><img src="http://upload-images.jianshu.io/upload_images/3984027-25cd6c93282af038.PNG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="捕获1.PNG"></p><p>2）浏览器在接收到这个资源后，会把这个资源连同所有response header一起缓存下来；</p><p>3）浏览器再请求这个资源时，先从缓存中寻找，找到这个资源后，根据它第一次的请求时间和Cache-Control设定的有效期，计算出一个资源过期时间，再拿这个过期时间跟当前的请求时间比较，如果请求时间在过期时间之前，就能命中缓存，否则就不行。</p><p>4）如果缓存没有命中，浏览器直接从服务器加载资源时，Cache-Control Header在重新加载的时候会被更新。<br>Cache-Control描述的是一个相对时间，在进行缓存命中的时候，都是利用客户端时间进行判断，所以相比较Expires，Cache-Control的缓存管理更有效，安全一些。</p><p><strong>当response header中，Expires和Cache-Control同时存在时，Cache-Control优先级高于Expires</strong></p><p>#####协商缓存<br>当浏览器对某个资源的请求没有命中强缓存，就会发一个请求到服务器，验证协商缓存是否命中，如果协商缓存命中，请求响应返回的http状态为304并且会显示一个Not Modified的字符串，比如你打开京东的首页，按f12打开开发者工具，再按f5刷新页面，查看network，可以看到有不少请求就是命中了协商缓存的：<br><a href="http://images2015.cnblogs.com/blog/459873/201601/459873-20160115111431303-866314106.png" target="_blank" rel="noopener"><img src="http://upload-images.jianshu.io/upload_images/3984027-619b86443b9ca398.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"></a><br>查看单个请求的Response Header，也能看到304的状态码和Not Modified的字符串，只要看到这个就可说明这个资源是命中了协商缓存，然后从客户端缓存中加载的，而不是服务器最新的资源：<br><a href="http://images2015.cnblogs.com/blog/459873/201601/459873-20160115111435100-1664945349.png" target="_blank" rel="noopener"><img src="http://upload-images.jianshu.io/upload_images/3984027-c84a93be93458346.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"></a><br>协商缓存是利用的是【Last-Modified，If-Modified-Since】和【ETag、If-None-Match】这两对Header来管理的。<br>【Last-Modified，If-Modified-Since】的控制缓存的原理是：<br>1）浏览器第一次跟服务器请求一个资源，服务器在返回这个资源的同时，在respone的header加上Last-Modified的header，这个header表示这个资源在服务器上的最后修改时间：</p><p><a href="http://images2015.cnblogs.com/blog/459873/201601/459873-20160115111438210-1551540589.png" target="_blank" rel="noopener"><img src="http://upload-images.jianshu.io/upload_images/3984027-75f4726565315e82.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"></a></p><p>2）浏览器再次跟服务器请求这个资源时，在request的header上加上If-Modified-Since的header，这个header的值就是上一次请求时返回的Last-Modified的值：</p><p><a href="http://images2015.cnblogs.com/blog/459873/201601/459873-20160115125437460-1062702620.png" target="_blank" rel="noopener"><img src="http://upload-images.jianshu.io/upload_images/3984027-07dc318ecc41d630.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="无标题"></a></p><p>3）服务器再次收到资源请求时，根据浏览器传过来If-Modified-Since和资源在服务器上的最后修改时间判断资源是否有变化，如果没有变化则返回304 Not Modified，但是不会返回资源内容；如果有变化，就正常返回资源内容。当服务器返回304 Not Modified的响应时，response header中不会再添加Last-Modified的header，因为既然资源没有变化，那么Last-Modified也就不会改变，这是服务器返回304时的response header：<br><a href="http://images2015.cnblogs.com/blog/459873/201601/459873-20160115111450069-558396542.png" target="_blank" rel="noopener"><img src="http://upload-images.jianshu.io/upload_images/3984027-af0d93ae62b49064.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"></a></p><p>4）浏览器收到304的响应后，就会从缓存中加载资源。</p><p>5）如果协商缓存没有命中，浏览器直接从服务器加载资源时，Last-Modified Header在重新加载的时候会被更新，下次请求时，If-Modified-Since会启用上次返回的Last-Modified值。</p><p>【Last-Modified，If-Modified-Since】都是根据服务器时间返回的header，一般来说，在没有调整服务器时间和篡改客户端缓存的情况下，这两个header配合起来管理协商缓存是非常可靠的，但是有时候也会服务器上资源其实有变化，但是最后修改时间却没有变化的情况，而这种问题又很不容易被定位出来，而当这种情况出现的时候，就会影响协商缓存的可靠性。所以就有了另外一对header来管理协商缓存，这对header就是【ETag、If-None-Match】。它们的缓存管理的方式是：<br>1）浏览器第一次跟服务器请求一个资源，服务器在返回这个资源的同时，在respone的header加上ETag的header，这个header是服务器根据当前请求的资源生成的一个唯一标识，这个唯一标识是一个字符串，只要资源有变化这个串就不同，跟最后修改时间没有关系，所以能很好的补充Last-Modified的问题：</p><p><a href="http://images2015.cnblogs.com/blog/459873/201601/459873-20160115112627835-440813422.png" target="_blank" rel="noopener"><img src="http://upload-images.jianshu.io/upload_images/3984027-fd76fb04f2b9ef8f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"></a></p><p>2）浏览器再次跟服务器请求这个资源时，在request的header上加上If-None-Match的header，这个header的值就是上一次请求时返回的ETag的值：<br><a href="http://images2015.cnblogs.com/blog/459873/201601/459873-20160115112635850-559297790.png" target="_blank" rel="noopener"><img src="http://upload-images.jianshu.io/upload_images/3984027-32f42ca3b8f02137.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"></a></p><p>3）服务器再次收到资源请求时，根据浏览器传过来If-None-Match和然后再根据资源生成一个新的ETag，如果这两个值相同就说明资源没有变化，否则就是有变化；如果没有变化则返回304 Not Modified，但是不会返回资源内容；如果有变化，就正常返回资源内容。与Last-Modified不一样的是，当服务器返回304 Not Modified的响应时，由于ETag重新生成过，response header中还会把这个ETag返回，即使这个ETag跟之前的没有变化：<br><a href="http://images2015.cnblogs.com/blog/459873/201601/459873-20160115125438928-1048294855.png" target="_blank" rel="noopener"><img src="http://upload-images.jianshu.io/upload_images/3984027-7d797665e30afb2a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"></a></p><p>4）浏览器收到304的响应后，就会从缓存中加载资源。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h5 id=&quot;浏览器缓存分为强缓存和协商缓存：&quot;&gt;&lt;a href=&quot;#浏览器缓存分为强缓存和协商缓存：&quot; class=&quot;headerlink&quot; title=&quot;浏览器缓存分为强缓存和协商缓存：&quot;&gt;&lt;/a&gt;浏览器缓存分为强缓存和协商缓存：&lt;/h5&gt;&lt;p&gt;1）浏览器在加载资源时，先根
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>深入理解闭包--内存</title>
@@ -39,10 +60,10 @@
   
   <entry>
     <title>从简书迁移部分Blog至Hexo</title>
-    <link href="http://yoursite.com/2018/01/09/%E4%BB%8E%E7%AE%80%E4%B9%A6%E8%BF%81%E7%A7%BB%E9%83%A8%E5%88%86Blog%E8%87%B3Hexo%20%20%20%20%20%20/"/>
-    <id>http://yoursite.com/2018/01/09/从简书迁移部分Blog至Hexo      /</id>
+    <link href="http://yoursite.com/2018/01/09/%E4%BB%8E%E7%AE%80%E4%B9%A6%E8%BF%81%E7%A7%BB%E9%83%A8%E5%88%86Blog%E8%87%B3Hexo/"/>
+    <id>http://yoursite.com/2018/01/09/从简书迁移部分Blog至Hexo/</id>
     <published>2018-01-09T04:10:41.221Z</published>
-    <updated>2018-01-09T06:52:42.940Z</updated>
+    <updated>2018-01-09T08:23:53.325Z</updated>
     
     <summary type="html">
     

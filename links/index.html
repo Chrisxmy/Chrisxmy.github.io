@@ -38,8 +38,6 @@
   
     
     
-        <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
-    
 
 </head>
 
@@ -51,12 +49,12 @@
       
       
       <div class="profile-block text-center">
-        <a id="avatar" href="https://github.com/cofess" target="_blank">
+        <a id="avatar" href="https://github.com/Chrisxmy" target="_blank">
           <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
         </a>
-        <h2 id="name" class="hidden-xs hidden-sm">昵称</h2>
-        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Web Developer &amp; Designer</h3>
-        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Shenzhen, China</small>
+        <h2 id="name" class="hidden-xs hidden-sm">shel</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Web Developer</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Suzhou, China</small>
       </div>
       
       <div class="search" id="search-form-wrap">
@@ -187,13 +185,9 @@
 	
     <ul class="social-links">
     	
-        <li><a href="https://github.com/cofess" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
-        
-        <li><a href="http://weibo.com/cofess" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        <li><a href="https://github.com/Chrisxmy" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
         
         <li><a href="https://twitter.com/iwebued" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
-        
-        <li><a href="https://www.behance.net/cofess" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
         
         <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
         
@@ -234,7 +228,7 @@
   <div class="widget">
     <h3 class="widget-title">归档</h3>
     <div class="widget-body">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -246,6 +240,21 @@
     <div class="widget-body">
       <ul class="recent-post-list list-unstyled no-thumbnail">
         
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2018/01/09/浏览器缓存/" class="title">浏览器缓存</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-01-09T08:11:56.699Z" itemprop="datePublished">2018-01-09</time>
+              </p>
+            </div>
+          </li>
+          
           <li>
             
             <div class="item-inner">
@@ -268,7 +277,7 @@
                 
               </p>
               <p class="item-title">
-                <a href="/2018/01/09/从简书迁移部分Blog至Hexo      /" class="title">从简书迁移部分Blog至Hexo</a>
+                <a href="/2018/01/09/从简书迁移部分Blog至Hexo/" class="title">从简书迁移部分Blog至Hexo</a>
               </p>
               <p class="item-date">
                 <time datetime="2018-01-09T04:10:41.221Z" itemprop="datePublished">2018-01-09</time>
@@ -343,9 +352,8 @@
   <section id="comments">
   	
        
+    <div id="uyan_frame"></div>
 
-
-    
     
   </section>
 
@@ -359,13 +367,9 @@
 	
     <ul class="social-links">
     	
-        <li><a href="https://github.com/cofess" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
-        
-        <li><a href="http://weibo.com/cofess" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        <li><a href="https://github.com/Chrisxmy" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
         
         <li><a href="https://twitter.com/iwebued" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
-        
-        <li><a href="https://www.behance.net/cofess" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
         
         <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
         
@@ -411,24 +415,8 @@ window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
     
         
     
-<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
-<script>
-var gitment = new Gitment({
-  // id默认为当前页面url，如果url后带参数或锚点，gitment要重新初始化
-  // https://github.com/imsun/gitment/issues/55
-  // 解决方案：id:window.location.pathname,或者将id设置为当前页面标题
-  id: '友情链接', 
-  owner: '', // 可以是你的GitHub用户名，也可以是github id
-  repo: '',
-  oauth: {
-    client_id: '',
-    client_secret: '',
-  }
-})
-gitment.render('comments')
-</script>
+    <script defer type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=[object Object]"></script>
 
-    
 
     
     
