@@ -59,6 +59,14 @@
     </entry>
     
     <entry>
+      <title><![CDATA[从简书迁移部分Blog至Hexo]]></title>
+      <url>/2018/01/09/%E4%BB%8E%E7%AE%80%E4%B9%A6%E8%BF%81%E7%A7%BB%E9%83%A8%E5%88%86Blog%E8%87%B3Hexo/</url>
+      <content type="html"></content>
+      
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[深入理解闭包--内存]]></title>
       <url>/2018/01/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E9%97%AD%E5%8C%85--%E5%86%85%E5%AD%98/</url>
       <content type="html"><![CDATA[<h4 id="内存（堆与栈）"><a href="#内存（堆与栈）" class="headerlink" title="内存（堆与栈）"></a>内存（堆与栈）</h4><p>由于JavaScript存在垃圾自动回收机制，所以我们在开发中并不用像C和C++之类语言一样手动去跟踪内存使用情况，所以很多初学者就忽略了这个问题，但是我发现如果真的对内存空间一无所知，对理解一些JavaScript中的概念比如<strong>基本类型</strong>和<strong>引用数据类型</strong>的区别；比如<strong>浅拷贝</strong>与<strong>深拷贝</strong>什么不同？还有闭包，原型等是很模糊的。</p>
@@ -126,14 +134,6 @@
 <p>闭包的形成，与作用域链的访问顺序有直接关系。</p>
 <p>只有内部函数访问了上层作用域链中的变量对象时，才会形成闭包，因此，我们可以利用闭包来访问函数内部的变量。</p>
 ]]></content>
-      
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[从简书迁移部分Blog至Hexo]]></title>
-      <url>/2018/01/09/%E4%BB%8E%E7%AE%80%E4%B9%A6%E8%BF%81%E7%A7%BB%E9%83%A8%E5%88%86Blog%E8%87%B3Hexo/</url>
-      <content type="html"></content>
       
         
     </entry>
