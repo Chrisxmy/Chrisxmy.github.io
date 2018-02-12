@@ -149,17 +149,6 @@
         
         
         
-        <li class="menu-item menu-item-books">
-          <a href="/books">
-            
-            <i class="icon icon-book-fill"></i>
-            
-            <span class="menu-title">书单</span>
-          </a>
-        </li>
-        
-        
-        
         <li class="menu-item menu-item-links">
           <a href="/links">
             
@@ -400,7 +389,7 @@ var open = function() {
     var errorContainer = repoContainer.find(".blankslate");
     var countContainer = $("#repo-count");
 
-    $.get("https://api.github.com/users/chris/repos", function(result) {
+    $.get("https://api.github.com/users/Chrisxmy/repos", function(result) {
       if (result) {
         errorContainer.remove();
         countContainer.text(result.length); //设置项目个数
